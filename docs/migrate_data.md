@@ -158,29 +158,28 @@ $ cat <<EOF > ./mysql2databend.json
   "job": {
     "setting": {
       "speed": {
-        "channel": 1
+        "channel": 4
       }
     },
     "content": {
       "writer": {
-        "name": "mysqlwriter",
+        "name": "databendwriter",
         "parameter": {
+          "preSql": [
+            "truncate table @table"
+          ],
+          "postSql": [
+          ],
           "username": "u1",
           "password": "123",
-          "column": [
-            "*"
-          ],
-          "connection": [
-            {
-              "table": [
-                "exec"
-              ],
-              "jdbcUrl": "jdbc:mysql://127.0.0.1:3307/migrate_db"
-            }
-          ],
-          "preSql": [
-            "truncate table migrate_db.exec"
-          ]
+          "database": "example_db",
+          "table": "table1",
+          "jdbcUrl": "jdbc:mysql://127.0.0.1:3307/example_db",
+          "loadUrl": ["127.0.0.1:8000","127.0.0.1:8000"],
+          "fieldDelimiter": "\\x01",
+          "lineDelimiter": "\\x02",
+          "column": ["*"],
+          "format": "csv"
         }
       },
       "reader": {
