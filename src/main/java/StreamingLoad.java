@@ -76,7 +76,7 @@ public class StreamingLoad {
     private void sendData(CloseableHttpClient client, String loadUrl, byte[] content) throws Exception {
             HttpPut put = new HttpPut(loadUrl);
             put.setHeader(HttpHeaders.AUTHORIZATION, basicAuthHeader(DATABEND_USER, DATABEND_PASSWORD));
-            put.setHeader("insert_sql", "insert into default.tb_1 format TSV");
+            put.setHeader("insert_sql", "insert into default.tb_1 file_format=(type=TSV)");
 
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
             builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
